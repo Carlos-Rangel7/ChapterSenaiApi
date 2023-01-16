@@ -1,15 +1,22 @@
+using ChapterSenai.Contexts;
+using ChapterSenai.Interfaces;
+using ChapterSenai.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddScoped<Sqlcontext, Sqlcontext>();
+builder.Services.AddTransient<LivroRepository, LivroRepository>();
+builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+
+
+
+// https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

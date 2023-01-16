@@ -5,7 +5,7 @@ namespace ChapterSenai.Contexts
 {
     public class Sqlcontext : DbContext
     {
-        public Sqlcontext() { }
+        public Sqlcontext() {}
         public Sqlcontext(DbContextOptions<Sqlcontext> options) : base(options) { }
         // vamos utilizar esse método para configurar o banco de dados
         protected override void
@@ -20,6 +20,8 @@ namespace ChapterSenai.Contexts
         }
         // dbset representa as entidades que serão utilizadas nas operações de leitura, criação, atualização e deleção
         public DbSet<Livro> Livros { get; set; }
+
+        public DbSet<Usuario> Usuarios { get; set; }
 
     }
 }

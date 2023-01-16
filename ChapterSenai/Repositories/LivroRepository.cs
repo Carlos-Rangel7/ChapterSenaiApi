@@ -2,12 +2,13 @@
 using ChapterSenai.Models;
 using System.Linq;
 
+
 namespace ChapterSenai.Repositories
 {
     public class LivroRepository
     {
         private readonly Sqlcontext _context;
-        public LivroRepository(Sqlcontext context)
+        public LivroRepository (Sqlcontext context)
         {
             _context = context;
 

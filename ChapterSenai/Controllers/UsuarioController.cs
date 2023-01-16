@@ -1,4 +1,5 @@
-﻿using ChapterSenai.Models;
+﻿using ChapterSenai.Interfaces;
+using ChapterSenai.Models;
 using ChapterSenai.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,22 +9,21 @@ namespace ChapterSenai.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class LivroController : ControllerBase
+    public class UsuarioController : ControllerBase
     {
-        private readonly LivroRepository _LivroRepository;
+        private readonly IUsuarioRepository _iUsuarioRepository;
 
-        public LivroController(LivroRepository livroRepository)
+        public UsuarioController(IUsuarioRepository iUsuarioRepository)
         {
-            _LivroRepository = livroRepository;
+            _iUsuarioRepository = iUsuarioRepository;
         }
 
         [HttpGet]
-
-        public IActionResult ler()
+        public IActionResult Listar() 
         {
             try
             {
-                return Ok(_LivroRepository.Listar());
+                return Ok(_iUsuarioRepository.Listar());
             }
             catch (Exception e)
             {
@@ -32,23 +32,18 @@ namespace ChapterSenai.Controllers
 
         }
 
-
         [HttpGet("{id}")]
-
         public IActionResult BuscarPorId(int id)
         {
-
             try
             {
+                Usuario usuarioEncontrado = _iUsuarioRepository.BuscarPorId(id);
 
-                Livro livroBuscado = _LivroRepository.BuscarPorId(id);
-
-                if (livroBuscado == null)
+                if (usuarioEncontrado == null)
                 {
-                    return NotFound("Não encontrado");
+                    return NotFound("Não Encontrado");
                 }
-
-                return Ok(livroBuscado);
+                return Ok(usuarioEncontrado);
             }
             catch (Exception e)
             {
@@ -57,11 +52,11 @@ namespace ChapterSenai.Controllers
         }
 
         [HttpPost]
-        public IActionResult Cadastrar(Livro l)
+        public IActionResult Cadastrar(Usuario usuario)
         {
             try
             {
-                _LivroRepository.Cadastro(l);
+                _iUsuarioRepository.Cadastrar(usuario);
                 return StatusCode(201);
             }
             catch (Exception e)
@@ -76,9 +71,9 @@ namespace ChapterSenai.Controllers
         {
             try
             {
-                _LivroRepository.Deletar(id);
-                return Ok("Livro Removido com sucesso");
-                    
+                _iUsuarioRepository.Deletar(id);
+                return Ok("Usuario Removido com sucesso");
+
             }
             catch (Exception e)
             {
@@ -88,11 +83,11 @@ namespace ChapterSenai.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Alterar(int id, Livro l) 
+        public IActionResult Alterar(int id, Usuario usuario)
         {
             try
             {
-                _LivroRepository.Alterar(id, l);
+                _iUsuarioRepository.Atualizar(id, usuario);
                 return StatusCode(204);
 
             }
@@ -101,7 +96,7 @@ namespace ChapterSenai.Controllers
 
                 throw new Exception(e.Message);
             }
-        }    
+        }
 
     }
 }
