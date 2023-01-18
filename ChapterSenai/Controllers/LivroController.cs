@@ -1,5 +1,6 @@
 ﻿using ChapterSenai.Models;
 using ChapterSenai.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace ChapterSenai.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LivroController : ControllerBase
     {
         private readonly LivroRepository _LivroRepository;
@@ -56,6 +58,7 @@ namespace ChapterSenai.Controllers
             }
         }
 
+        [Authorize(Roles ="1")]
         [HttpPost]
         public IActionResult Cadastrar(Livro l)
         {

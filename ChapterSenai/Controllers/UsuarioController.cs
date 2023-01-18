@@ -17,7 +17,7 @@ namespace ChapterSenai.Controllers
         {
             _iUsuarioRepository = iUsuarioRepository;
         }
-
+       
         [HttpGet]
         public IActionResult Listar() 
         {
